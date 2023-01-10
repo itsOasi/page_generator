@@ -91,7 +91,20 @@ export const PageGenerator = {
         .then(text=> node.innerHTML = text); // insert text data into node
         
         this.insert(node);
-        this.addClass(id,   ".box");
+        this.addClass(id, "box");
+    },
+    addHSpace: function(id){
+        let node = document.createElement("div");
+        node.id = id;
+        this.insert(node)
+        this.add(id, "hspacer");
+    },
+    
+    addVSpace: function(id){
+        let node = document.createElement("div");
+        node.id = id;
+        this.insert(node)
+        this.add(id, "vspacer");
     },
 
     // pointer control
