@@ -4,6 +4,7 @@ export const PageGenerator = {
     // functions for adding elements
     addBox: function (id){
         let container = document.createElement("div");
+        container.id = id;
         this.insert(container);
         this.addClass(id, "box");
     },
@@ -98,11 +99,12 @@ export const PageGenerator = {
         this._curr.appendChild(node); // adds node to document
         this.select(node); // and selects it
     },
-    goHome: function (node){
+    goHome: function (){
         this._curr = this._home; // sets document body as the current node
     },
     setHome: function(id){
         this._home = document.getElementById(id);
+        this.goHome();
     },
     select: function (node){
         this._curr = node; // sets node as the current node 
