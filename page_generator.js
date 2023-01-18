@@ -1,27 +1,31 @@
-export const PageGenerator = {
-    _home: document.body,
-    _curr: document.body,
+export class PageGenerator{
+	constructor(){
+		this._home = document.body;
+		this._curr = document.body;
+		this._ids = []
+	}
     // functions for adding elements
-    addBox: function (id){
+    addBox(id){
         let container = document.createElement("div");
         container.id = id;
         this.insert(container);
         this.addClass(id, "box");
-    },
-    addHBox: function (id){
+    }
+    addHBox(id){
         let container = document.createElement("div");
         container.id = id;
+		console.log(this._home);
         this.insert(container);
         this.addClass(id, "hbox");
-    },
-    addVBox: function (id){
+    }
+    addVBox(id){
         let container = document.createElement("div");
         container.id = id;
         this._curr.append(container)
         this.insert(container);;
         this.addClass(id, "vbox");
-    },
-    addPara: function (text, id){
+    }
+    addPara(text, id){
         console.log(this._curr);
         let node = document.createElement("p");
         node.innerText = text;
@@ -29,8 +33,8 @@ export const PageGenerator = {
         this._curr.append(node)
         this.insert(node)
         this.addClass(id, "para");
-    },
-    addTitle: function (text, id){
+    }
+    addTitle(text, id){
         console.log(this._curr);
         let node = document.createElement("h1");
         node.innerText = text;
@@ -38,16 +42,16 @@ export const PageGenerator = {
         this._curr.append(node)
         this.insert(node)
         this.addClass(id, "title");
-    },
-    addButton: function(text, id, callback){
+    }
+    addButton(text, id, callback){
         let button = document.createElement("button");
         button.id = id;
         button.innerText = text;
         button.onclick = callback;
         this.insert(button);
         this.addClass(id, "button");
-    },
-    addLink: function(text, id, href, callback){
+    }
+    addLink(text, id, href, callback){
         let button = document.createElement("p");
         button.id = id;
         button.innerText = text;
@@ -56,16 +60,16 @@ export const PageGenerator = {
         // add .link
         this.insert(button);
         this.addClass(id, "link");
-    },
-    addImage: function(link, id, callback, alt){
+    }
+    addImage(link, id, callback, alt){
         let img = document.createElement("img");
         img.id = id;
         img.src = link;
         img.onclick = callback;
         img.alt = alt;
         this.insert(img);
-    },
-    addTextInput: function(id, placeholder, callback){
+    }
+    addTextInput(id, placeholder, callback){
         // add a text input element
         let input = document.createElement("input");
         input.type = "text"
@@ -73,16 +77,16 @@ export const PageGenerator = {
         input.placeholder = placeholder
         input.onclick = callback
         this.insert(input);
-    },
-    addNumberInput: function(id, callback){
+    }
+    addNumberInput(id, callback){
         // add a number input element
         input.type = "number"
         input.id = id
         let input = document.createElement("input");
         input.onclick = callback
         this.insert(input);
-    },
-    addCustomHTML: function(id, path){
+    }
+    addCustomHTML(id, path){
         // grabs content from path and adds it to page
         let node = document.createElement("div");
         node.id = id;
@@ -92,71 +96,68 @@ export const PageGenerator = {
         
         this.insert(node);
         this.addClass(id, "box");
-    },
-    addHSpace: function(id){
+    }
+    addSpacer(id){
+		// adds an empty div
         let node = document.createElement("div");
         node.id = id;
         this.insert(node)
-        this.add(id, "hspacer");
-    },
-    
-    addVSpace: function(id){
-        let node = document.createElement("div");
-        node.id = id;
-        this.insert(node)
-        this.add(id, "vspacer");
-    },
+        this.addClass(id, "spacer");
+    }
 
     // pointer control
-    insert: function(node){
+    insert(node){
         this._curr.appendChild(node); // adds node to document
-        this.select(node); // and selects it
-    },
-    goHome: function (){
+		this.select(node); // and selects it
+    }
+    goHome(){
         this._curr = this._home; // sets document body as the current node
-    },
-    setHome: function(id){
+    }
+    setHome(id){
         this._home = document.getElementById(id);
         this.goHome();
-    },
-    select: function (node){
+    }
+    select(node){
         this._curr = node; // sets node as the current node 
-    },
-    selectById: function (id){
+    }
+    selectById(id){
         this._curr = document.getElementById(id); // selects a node by id, useful for adding content to containers
-    },
-
+    }
+	clearPage(){
+		this._home.replaceChildren("");
+		console.log(this._home)
+	}
     // page styling
-    setBackgroundColor: function(value){
+    setBackgroundColor(value){
         document.body.style.setProperty(`--background`, value) 
-    },
-    setBackgroundImage: function(value){
-        document.body.style.setProperty(`background-image`, `url(${value})`)
-    },
-    setNeutralColor: function(value){
+    }
+    setBackgroundImage(value){
+        docment.body.style.setProperty(`background-image`, `url(${value})`)
+    }
+    setNeutralColor(value){
         document.body.style.setProperty(`--neutral`, value)
-    },
-    setPrimaryColor: function(value){
+    }
+    setPrimaryColor(value){
         document.body.style.setProperty(`--primary`, value)
-    },
-    setSecondaryColor: function(value){
+    }
+    setSecondaryColor(value){
         document.body.style.setProperty(`--secondary`, value)
-    },
-    setTextColor: function(value){
+    }
+    setTextColor(value){
         document.body.style.setProperty(`--text`, value)
-    },
+    }
 
     // modifying elements by given id
-    setStyle: function(id, prop, value){
+    setStyle(id, prop, value){
         let el = document.getElementById(id);
         el.style.setProperty(`${prop}`, value);
         
-    },
-    addClass: function(id, name){
+    }
+    addClass(id, name){
         let node = document.getElementById(id);
         node.classList.add(name);
-    },
-    update: function(id, prop, value){
+    }
+    update(id, prop, value){
         let el = document.getElementById(id);
         el.setAttribute(`${prop}`, value);
 
